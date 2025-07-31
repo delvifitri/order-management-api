@@ -16,6 +16,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('products/catalog', [ProductController::class, 'catalog']);
     Route::middleware('role:admin')->group(function () {
         Route::apiResource('products', ProductController::class);
     });

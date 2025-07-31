@@ -102,4 +102,25 @@ class ProductController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Displaying all available products.
+     */
+    public function catalog()
+    {
+        try {
+            $products = Product::active()->inStock()->orderBy('name')->get();
+
+            return response()->json([
+                'message' => 'Product catalog retrieved successfully',
+                'data' => $products
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to retrieve catalog',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
