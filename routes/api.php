@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -11,5 +12,11 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::get('me', [AuthController::class, 'me']);
+    });
+});
+
+Route::middleware('auth')->group(function () {
+    Route::middleware('role:admin')->group(function () {
+        Route::apiResource('products', ProductController::class);
     });
 });

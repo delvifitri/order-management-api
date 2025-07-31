@@ -14,13 +14,13 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string ...$roles = []): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
         try {
             $payload = JWTAuth::parseToken()->getPayload();
             $userRole = $payload->get('role');
 
-            if ($roles && in_array($userRole, $roles)) {
+            if ($roles && !in_array($userRole, $roles)) {
                 return response()->json([
                     'error' => 'Unauthorized',
                     'message' => 'Insufficient permissions'
