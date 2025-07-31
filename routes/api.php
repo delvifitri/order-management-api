@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,10 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('products/catalog', [ProductController::class, 'catalog']);
+    Route::apiResource('orders', OrderController::class)->only(['index', 'show', 'store']);
+    
     Route::middleware('role:admin')->group(function () {
         Route::apiResource('products', ProductController::class);
+        Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus']);
     });
 });

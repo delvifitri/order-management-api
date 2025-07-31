@@ -21,7 +21,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => $request->role ?? 'customer',
+                'role' => 'customer',
             ]);
 
             $accessToken = JWTAuth::fromUser($user);
@@ -83,7 +83,6 @@ class AuthController extends Controller
                 'mesage' => $e->getMessage()
             ], 500);
         }
-
     }
 
     public function refresh(Request $request)

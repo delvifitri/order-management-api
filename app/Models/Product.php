@@ -26,6 +26,11 @@ class Product extends Model
         ];
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
